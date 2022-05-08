@@ -1,92 +1,466 @@
 <!DOCTYPE html>
-<html lang="en-us">
-  <head>
+<html style="font-size: 16px;"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>OnlineWordle</title>
-    <link rel="shortcut icon" href="TemplateData/favicon.ico">
-    <link rel="stylesheet" href="TemplateData/style.css">
-  </head>
-  <body class="dark">
-    <div id="unity-container" class="unity-desktop">
-      <canvas id="unity-canvas"></canvas>
-    </div>
-    <div id="loading-cover" style="display:none;">
-      <div id="unity-loading-bar">
-        <div id="unity-logo"><img src="logo.png"></div>
-        <div id="unity-progress-bar-empty" style="display: none;">
-          <div id="unity-progress-bar-full"></div>
-        </div>
-        <div class="spinner"></div>
-      </div>
-    </div>
-    <div id="unity-fullscreen-button" style="display: none;"></div>
+    <meta name="keywords" content="​&nbsp;VR, PC, Android...">
+    <meta name="description" content="">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <title>Home</title>
+    <link rel="stylesheet" href="nicepage.css" media="screen">
+<link rel="stylesheet" href="Home.css" media="screen">
+    <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
+    <meta name="generator" content="Nicepage 4.8.2, nicepage.com">
+    <meta property="og:title" content="Joel Blasco">
+    <meta property="og:description" content="Game Developer.">
+    <meta property="og:image" content="images/-min.jpg">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+    <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web:200,200i,300,300i,400,400i,600,600i,700,700i,900|Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
+    
+    
+    
+    
+    
+    
+    
+    <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": "Site1"
+}</script>
+    <meta name="theme-color" content="#478ac9">
+    <meta property="og:type" content="website">
+  <script>
+    function gdprConfirmed() {
+        return true;
+    }
+    if (gdprConfirmed()) {
+    document.write("\
+    \
+    <!-- Google Analytics -->\
+    <gascript async src=\"https://www.googletagmanager.com/gtag/js?id=joelblasco.es\"></gascript>\
+    <gascript>\
+        window.dataLayer = window.dataLayer || [];\
+        function gtag(){dataLayer.push(arguments);}\
+        gtag('js', new Date());\
+        gtag('config', 'joelblasco.es');\
+    </gascript>\
+    <!-- End Google Analytics -->\
+    ".replace(/gascript/g, 'script'));
+    }
+    </script><script src="https://www.google.com/recaptcha/api.js?render=6LejiDgfAAAAAOfJwzTeYzynWDVuj8N0fslfXRmk"></script>
     <script>
-      const hideFullScreenButton = "";
-      const buildUrl = "Build";
-      const loaderUrl = buildUrl + "/BuildOnlineWordle.loader.js";
-      const config = {
-        dataUrl: buildUrl + "/BuildOnlineWordle.data",
-        frameworkUrl: buildUrl + "/BuildOnlineWordle.framework.js",
-        codeUrl: buildUrl + "/BuildOnlineWordle.wasm",
-        streamingAssetsUrl: "StreamingAssets",
-        companyName: "JoelDev",
-        productName: "OnlineWordle",
-        productVersion: "0.1",
-      };
+( function( grecaptcha, sitekey, actions ) {
 
-      const container = document.querySelector("#unity-container");
-      const canvas = document.querySelector("#unity-canvas");
-      const loadingCover = document.querySelector("#loading-cover");
-      const progressBarEmpty = document.querySelector("#unity-progress-bar-empty");
-      const progressBarFull = document.querySelector("#unity-progress-bar-full");
-      const fullscreenButton = document.querySelector("#unity-fullscreen-button");
-      const spinner = document.querySelector('.spinner');
+	var recaptcha = {
 
-      const canFullscreen = (function() {
-        for (const key of [
-            'exitFullscreen',
-            'webkitExitFullscreen',
-            'webkitCancelFullScreen',
-            'mozCancelFullScreen',
-            'msExitFullscreen',
-          ]) {
-          if (key in document) {
-            return true;
-          }
-        }
-        return false;
-      }());
+		execute: function( action ) {
+			grecaptcha.execute(
+				sitekey,
+				{ action: action }
+			).then( function( token ) {
+				var forms = document.getElementsByTagName( 'form' );
 
-      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        container.className = "unity-mobile";
-        config.devicePixelRatio = 1;
-      }
-      loadingCover.style.display = "";
+				for ( var i = 0; i < forms.length; i++ ) {
+					var fields = forms[ i ].getElementsByTagName( 'input' );
 
-      const script = document.createElement("script");
-      script.src = loaderUrl;
-      script.onload = () => {
-        createUnityInstance(canvas, config, (progress) => {
-          spinner.style.display = "none";
-          progressBarEmpty.style.display = "";
-          progressBarFull.style.width = `${100 * progress}%`;
-        }).then((unityInstance) => {
-          loadingCover.style.display = "none";
-          if (canFullscreen) {
-            if (!hideFullScreenButton) {
-              fullscreenButton.style.display = "";
-            }
-            fullscreenButton.onclick = () => {
-              unityInstance.SetFullscreen(1);
-            };
-          }
-        }).catch((message) => {
-          alert(message);
-        });
-      };
-      document.body.appendChild(script);
+					for ( var j = 0; j < fields.length; j++ ) {
+						var field = fields[ j ];
+
+						if ( 'recaptchaResponse' === field.getAttribute( 'name' ) ) {
+							field.setAttribute( 'value', token );
+							break;
+						}
+					}
+				}
+			} );
+		},
+
+		executeContact: function() {
+			recaptcha.execute( actions[ 'contact' ] );
+		}
+	};
+
+	grecaptcha.ready(
+		recaptcha.executeContact
+	);
+
+	document.addEventListener( 'change',
+		recaptcha.executeContact, false
+	);
+} )(
+	grecaptcha,
+	'6LejiDgfAAAAAOfJwzTeYzynWDVuj8N0fslfXRmk',
+	{"contact":"contact"}
+);
     </script>
-  </body>
-</html>
+</head>
+  <body data-home-page="Home.html" data-home-page-title="Home" class="u-body u-xl-mode"><header class="u-clearfix u-header u-sticky u-sticky-41f8 u-white u-header" id="sec-beb2"><div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1" data-responsive-from="MD">
+          <div class="menu-collapse" style="font-size: 1.125rem; letter-spacing: 0px;">
+            <a class="u-border-2 u-border-grey-75 u-border-no-left u-border-no-right u-border-no-top u-button-style u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-text-active-color u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="#">
+              <svg class="u-svg-link" viewBox="0 0 24 24"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
+              <svg class="u-svg-content" version="1.1" id="menu-hamburger" viewBox="0 0 16 16" x="0px" y="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
+</g></svg>
+            </a>
+          </div>
+          <div class="u-custom-menu u-nav-container">
+            <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-custom-color-3 u-text-hover-palette-2-base" href="Home.html" style="padding: 10px 20px;">Home</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-custom-color-3 u-text-hover-palette-2-base" href="Projects.html" style="padding: 10px 20px;">Projects</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-custom-color-3 u-text-hover-palette-2-base" href="Contact.html" style="padding: 10px 20px;">Contact</a>
+</li></ul>
+          </div>
+          <div class="u-custom-menu u-nav-container-collapse">
+            <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+              <div class="u-inner-container-layout u-sidenav-overflow">
+                <div class="u-menu-close"></div>
+                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Home.html">Home</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Projects.html">Projects</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Contact.html">Contact</a>
+</li></ul>
+              </div>
+            </div>
+            <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+          </div>
+        </nav>
+        <h3 class="u-custom-font u-font-raleway u-headline u-text u-text-custom-color-1 u-text-default u-text-1">
+          <a href="/"><span class="u-file-icon u-icon"><img src="images/3721643.png" alt=""></span>&nbsp;Joel Blasco
+          </a>
+        </h3>
+      </div></header>
+    <section class="skrollable u-align-center u-clearfix u-gradient u-section-1" id="carousel_a244">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <div class="u-shape u-shape-svg u-text-custom-color-2 u-shape-1" data-animation-name="bounceIn" data-animation-duration="1000" data-animation-direction="">
+          <svg class="u-svg-link" preserveAspectRatio="none" viewBox="0 0 160 160" style=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-a0bf"></use></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xml:space="preserve" class="u-svg-content" viewBox="0 0 160 160" x="0px" y="0px" id="svg-a0bf" style="enable-background:new 0 0 160 160;"><path d="M80,30c27.6,0,50,22.4,50,50s-22.4,50-50,50s-50-22.4-50-50S52.4,30,80,30 M80,0C35.8,0,0,35.8,0,80s35.8,80,80,80
+	s80-35.8,80-80S124.2,0,80,0L80,0z"></path></svg>
+        </div>
+        <div class="u-hidden-xs u-shape u-shape-svg u-text-custom-color-1 u-shape-2" data-animation-name="flipIn" data-animation-duration="1000" data-animation-direction="X">
+          <svg class="u-svg-link" preserveAspectRatio="none" viewBox="0 0 160 160" style=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-e858"></use></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xml:space="preserve" class="u-svg-content" viewBox="0 0 160 160" x="0px" y="0px" id="svg-e858" style="enable-background:new 0 0 160 160;"><path d="M80,30c27.6,0,50,22.4,50,50s-22.4,50-50,50s-50-22.4-50-50S52.4,30,80,30 M80,0C35.8,0,0,35.8,0,80s35.8,80,80,80
+	s80-35.8,80-80S124.2,0,80,0L80,0z"></path></svg>
+        </div>
+        <div class="u-image u-image-circle u-image-1" data-image-width="1200" data-image-height="942"></div>
+        <div class="u-gradient u-shape u-shape-circle u-shape-3" data-animation-name="bounceIn" data-animation-duration="1000" data-animation-direction=""></div>
+        <div class="u-container-style u-expanded-width-xs u-group u-white u-group-1">
+          <div class="u-container-layout u-container-layout-1">
+            <h1 class="u-custom-font u-font-titillium-web u-text u-text-custom-color-1 u-text-1"><span class="u-file-icon u-icon"><img src="images/1055666.png" alt=""></span>&nbsp;Game developer.
+            </h1>
+            <p class="u-large-text u-text u-text-variant u-text-2">Hello! I'm<span style="font-weight: 700;">
+                <a href="Home.html#carousel_1ddb" data-page-id="870220990" class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-active-custom-color-3 u-text-custom-color-1 u-text-hover-custom-color-2 u-btn-1"> Joel Blasco</a>
+              </span>, a passionate professional game developer, I make games for all kind of platforms, from <span style="font-weight: 700;">mobile</span> to <span style="font-weight: 700;">virtual reality</span>.
+            </p>
+            <a href="Projects.html" data-page-id="402817513" class="u-active-custom-color-1 u-border-none u-btn u-btn-round u-button-style u-gradient u-hover-custom-color-1 u-none u-radius-50 u-text-active-white u-text-body-alt-color u-text-hover-white u-btn-2">PREVIOUS WORK</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="skrollable u-align-center u-clearfix u-custom-color-4 u-lightbox u-valign-middle u-section-2" id="sec-bd9a">
+      <style data-mode="XXL">@media (max-width: 0px) {
+  .u-block-6460-2 {
+    min-height: 613px;
+  }
+  .u-section-2 .u-slider-1 {
+    width: 758px;
+    min-height: 478px;
+    height: auto;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .u-section-2 .u-carousel-indicators-1 {
+    position: absolute;
+    bottom: 10px;
+    width: auto;
+    height: auto;
+  }
+  .u-section-2 .u-image-1 {
+    background-image: linear-gradient(0deg, rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url("data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJkZWZhdWx0LWltYWdlLXNvbGlkIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgNDAwIDI2NSIgc3R5bGU9IndpZHRoOiA0MDBweDsgaGVpZ2h0OiAyNjVweDsiPg0KPHJlY3QgZmlsbD0iI0M2RDhFMSIgd2lkdGg9IjQwMCIgaGVpZ2h0PSIyNjUiLz4NCjxwYXRoIGZpbGw9IiNEOUUzRTgiIGQ9Ik0zOTUuMyw5Ni4yYy01LTAuOC02LjEsMS4xLTguNSwyLjljLTEtMi4zLTIuNi02LjItNy43LTVjMS41LTUuMy0yLjYtOC40LTcuNy04LjRjLTAuNiwwLTEuMiwwLjEtMS44LDAuMg0KCWMtMS44LTQuMS02LTYuOS0xMC43LTYuOWMtNi41LDAtMTEuOCw1LjMtMTEuOCwxMS44YzAsMC40LDAsMC45LDAuMSwxLjNjLTEuMi0wLjgtMi41LTEuMy0zLjktMS4zYy00LjMsMC03LjksNC4yLTcuOSw5LjQNCgljMCwxLjIsMC4yLDIuNCwwLjYsMy41Yy0wLjUtMC4xLTEtMC4xLTEuNi0wLjFjLTYuOSwwLTEyLjUsNS41LTEyLjcsMTIuNGMtMC45LTAuMi0xLjktMC40LTIuOS0wLjRjLTYuNCwwLTExLjcsNS4yLTEyLjUsMTEuOA0KCWMtMS4yLTAuNC0yLjUtMC42LTMuOS0wLjZjLTUuOSwwLTEwLjgsMy44LTEyLjEsOC45Yy0yLjQtMi01LjUtMy4yLTguOS0zLjJjLTYsMC0xMS4xLDMuNy0xMi44LDguOGMtMS41LTEuNC0zLjgtMi4zLTYuMy0yLjMNCgljLTIuMSwwLTQuMSwwLjYtNS41LDEuN2gtMC4xYy0xLjMtNS41LTYuMi05LjUtMTIuMS05LjVjLTIuNCwwLTQuNywwLjctNi42LDEuOWMtMS40LTAuNy0zLTEuMi00LjgtMS4yYy0wLjMsMC0wLjUsMC0wLjgsMA0KCWMtMS41LTQuMS01LjItNy05LjUtN2MtMy4xLDAtNS45LDEuNS03LjgsMy45Yy0yLjItNC44LTYuOC04LjItMTIuMi04LjJjLTUuNiwwLTEwLjUsMy43LTEyLjUsOC44Yy0yLjEtMC45LTQuNC0xLjUtNi45LTEuNQ0KCWMtNi44LDAtMTIuNSwzLjktMTQuNSw5LjNjLTAuMiwwLTAuNSwwLTAuNywwYy01LjIsMC05LjYsMy4yLTExLjQsNy44Yy0yLjctMi44LTctNC41LTExLjgtNC41Yy0zLjMsMC02LjQsMC45LTguOSwyLjMNCgljLTIuMS02LjUtOC0xMi4yLTE4LjEtOS45Yy0yLjctMi4zLTYuMy0zLjctMTAuMS0zLjdjLTIuNSwwLTQuOCwwLjYtNi45LDEuNmMtMi4yLTUuOS03LjktMTAuMS0xNC42LTEwLjFjLTguNiwwLTE1LjYsNy0xNS42LDE1LjYNCgljMCwwLjksMC4xLDEuNywwLjIsMi41Yy0yLjYtNS03LjgtOC40LTEzLjgtOC40Yy04LjMsMC0xNS4xLDYuNS0xNS42LDE0LjZjLTIuOS0zLjItNy01LjMtMTEuNy01LjNjLTcuNCwwLTEzLjUsNS4xLTE1LjIsMTINCgljLTIuOS0zLjUtOS44LTYtMTQuNy02djExOS4yaDQwMFYxMDJDNDAwLDEwMiw0MDAsOTcsMzk1LjMsOTYuMnoiLz4NCjxwYXRoIGZpbGw9IiM4RUE4QkIiIGQ9Ik00MDAsMjA2LjJjMCwwLTI1LjMtMTkuMi0zMy42LTI1LjdjLTEzLjQtMTAuNi0yMy4xLTEyLjktMzEuNy03cy0yMy45LDE5LjctMjMuOSwxOS43cy01OC45LTYzLjktNjEuNS02Ni40DQoJYy0xLjUtMS40LTMuNi0xLjctNS41LTAuOWMtNS4yLDIuNC0xNy42LDkuNy0yNC41LDEyLjdjLTYuOSwyLjktNDEtNTAuNy00OS42LTUzcy04NC4zLDgzLjMtMTAxLjQsNzUuMXMtMjYuOS0yLjMtMzUuNCwzLjUNCgljLTguNiw1LjktMTEsNS45LTE1LjksOC4ycy0xNy4xLTUuOS0xNy4xLTUuOVYyNjVjMCwwLDQwMCwwLjIsNDAwLDB2LTU4LjhINDAweiIvPg0KPHBhdGggZmlsbD0iIzdFOTZBNiIgZD0iTTMzMy40LDE3OWMtMTMuMS05LjMtNDAsNC42LTU1LjEsMTAuN2MtMjMuNiw5LjYtOTQtNTQuNC0xMDcuMi01OS43YzAsMC00LjIsMy43LTkuNiw3LjYNCgljLTMuNS0wLjQtOC40LTUuNy05LjktNC43Yy00LjYsMy4xLTE3LjgsMTUuNC0yOC4zLDI2LjZjLTEwLjUsMTEuMy0xMS43LDAtMTUuOC0wLjZjLTIuNS0wLjQtNTQuMSw0Mi41LTU4LjcsNDMuMQ0KCUMyMi4zLDIwNS4zLDAsMTk3LjUsMCwxOTcuNVYyNjVsNDAwLTAuMXYtNTMuM0M0MDAsMjExLjYsMzQ0LjgsMTg3LjEsMzMzLjQsMTc5eiIvPg0KPHBhdGggZmlsbD0iIzc4OEY5RSIgZD0iTTAsMjY0Ljl2LTU4LjZjMCwwLDguMiwxLjgsMTEuMyw1LjNjMy4xLDMuNiwyNi4xLTQuMiwyNi4xLDQuN3MwLjUsNC4yLDAuNSwxNC44YzAsMTAuNywyMy00LjIsMzguMS0xOC40DQoJczM0LjktNDkuMiwzNi0zNWMxLDE0LjItMTUuMSwzOS4yLTI0LDU2LjRDNzkuMSwyNTEuNCw1MS43LDI2NSw1MS43LDI2NUwwLDI2NC45eiIvPg0KPHBhdGggZmlsbD0iIzc4OEY5RSIgZD0iTTEwMCwyNjVjMCwwLDY2LjctMTI1LjEsNjguMy0xMTYuOHMtNi44LDI5LjcsMi4xLDI2LjFjOC45LTMuNiwxNC42LTE2LDE4LjgtOS41czE2LjIsMzguNiwyMS45LDMzLjgNCgljNS43LTQuNywyMS40LTEzLjEsMjIuNC02LjVjMSw2LjUtMSw1LjMtNS43LDIwLjJDMjIzLjEsMjI3LjEsMjAwLDI2NSwyMDAsMjY1aC0xMGMwLDAsNi0yNC44LDguNi0zNC45YzIuNi0xMC4xLTMuNy0xOS0xMi04LjMNCglzLTIzLDIyLTI0LDE3LjhzLTUuNy0zMC4zLTE4LjgtMTQuMmMtMTMsMTYtMzMuOCwzOS43LTMzLjgsMzkuN2gtMTBWMjY1eiIvPg0KPHBhdGggZmlsbD0iIzc4OEY5RSIgZD0iTTI0NSwyNjVjMCwwLDE5LjgtNTQuNywzMy40LTY0LjJzNTMuNy0yNy45LDQ2LjktMTMuNmMtNi44LDE0LjItMTEsMzQuNC0yMC4zLDQ5LjgNCgljLTkuNCwxNS40LTE4LjgsMjYuMS0xNC4xLDEzLjZjNC43LTEyLjUsNi40LTIzLjMsMy43LTIzLjFDMjcxLjMsMjI5LjEsMjYwLDI2NSwyNjAsMjY1SDI0NXoiLz4NCjwvc3ZnPg0K");
+    background-position: 50% 50%;
+  }
+  .u-section-2 .u-container-layout-1 {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-left: 60px;
+    padding-right: 60px;
+  }
+  .u-section-2 .u-text-1 {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .u-section-2 .u-text-2 {
+    width: 409px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0;
+  }
+  .u-section-2 .u-btn-1 {
+    border-style: none;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    letter-spacing: 1px;
+    background-image: none;
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0;
+  }
+  .u-section-2 .u-image-2 {
+    background-image: linear-gradient(0deg, rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url("data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJkZWZhdWx0LWltYWdlLXNvbGlkIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgNDAwIDI2NSIgc3R5bGU9IndpZHRoOiA0MDBweDsgaGVpZ2h0OiAyNjVweDsiPg0KPHJlY3QgZmlsbD0iI0M2RDhFMSIgd2lkdGg9IjQwMCIgaGVpZ2h0PSIyNjUiLz4NCjxwYXRoIGZpbGw9IiNEOUUzRTgiIGQ9Ik0zOTUuMyw5Ni4yYy01LTAuOC02LjEsMS4xLTguNSwyLjljLTEtMi4zLTIuNi02LjItNy43LTVjMS41LTUuMy0yLjYtOC40LTcuNy04LjRjLTAuNiwwLTEuMiwwLjEtMS44LDAuMg0KCWMtMS44LTQuMS02LTYuOS0xMC43LTYuOWMtNi41LDAtMTEuOCw1LjMtMTEuOCwxMS44YzAsMC40LDAsMC45LDAuMSwxLjNjLTEuMi0wLjgtMi41LTEuMy0zLjktMS4zYy00LjMsMC03LjksNC4yLTcuOSw5LjQNCgljMCwxLjIsMC4yLDIuNCwwLjYsMy41Yy0wLjUtMC4xLTEtMC4xLTEuNi0wLjFjLTYuOSwwLTEyLjUsNS41LTEyLjcsMTIuNGMtMC45LTAuMi0xLjktMC40LTIuOS0wLjRjLTYuNCwwLTExLjcsNS4yLTEyLjUsMTEuOA0KCWMtMS4yLTAuNC0yLjUtMC42LTMuOS0wLjZjLTUuOSwwLTEwLjgsMy44LTEyLjEsOC45Yy0yLjQtMi01LjUtMy4yLTguOS0zLjJjLTYsMC0xMS4xLDMuNy0xMi44LDguOGMtMS41LTEuNC0zLjgtMi4zLTYuMy0yLjMNCgljLTIuMSwwLTQuMSwwLjYtNS41LDEuN2gtMC4xYy0xLjMtNS41LTYuMi05LjUtMTIuMS05LjVjLTIuNCwwLTQuNywwLjctNi42LDEuOWMtMS40LTAuNy0zLTEuMi00LjgtMS4yYy0wLjMsMC0wLjUsMC0wLjgsMA0KCWMtMS41LTQuMS01LjItNy05LjUtN2MtMy4xLDAtNS45LDEuNS03LjgsMy45Yy0yLjItNC44LTYuOC04LjItMTIuMi04LjJjLTUuNiwwLTEwLjUsMy43LTEyLjUsOC44Yy0yLjEtMC45LTQuNC0xLjUtNi45LTEuNQ0KCWMtNi44LDAtMTIuNSwzLjktMTQuNSw5LjNjLTAuMiwwLTAuNSwwLTAuNywwYy01LjIsMC05LjYsMy4yLTExLjQsNy44Yy0yLjctMi44LTctNC41LTExLjgtNC41Yy0zLjMsMC02LjQsMC45LTguOSwyLjMNCgljLTIuMS02LjUtOC0xMi4yLTE4LjEtOS45Yy0yLjctMi4zLTYuMy0zLjctMTAuMS0zLjdjLTIuNSwwLTQuOCwwLjYtNi45LDEuNmMtMi4yLTUuOS03LjktMTAuMS0xNC42LTEwLjFjLTguNiwwLTE1LjYsNy0xNS42LDE1LjYNCgljMCwwLjksMC4xLDEuNywwLjIsMi41Yy0yLjYtNS03LjgtOC40LTEzLjgtOC40Yy04LjMsMC0xNS4xLDYuNS0xNS42LDE0LjZjLTIuOS0zLjItNy01LjMtMTEuNy01LjNjLTcuNCwwLTEzLjUsNS4xLTE1LjIsMTINCgljLTIuOS0zLjUtOS44LTYtMTQuNy02djExOS4yaDQwMFYxMDJDNDAwLDEwMiw0MDAsOTcsMzk1LjMsOTYuMnoiLz4NCjxwYXRoIGZpbGw9IiM4RUE4QkIiIGQ9Ik00MDAsMjA2LjJjMCwwLTI1LjMtMTkuMi0zMy42LTI1LjdjLTEzLjQtMTAuNi0yMy4xLTEyLjktMzEuNy03cy0yMy45LDE5LjctMjMuOSwxOS43cy01OC45LTYzLjktNjEuNS02Ni40DQoJYy0xLjUtMS40LTMuNi0xLjctNS41LTAuOWMtNS4yLDIuNC0xNy42LDkuNy0yNC41LDEyLjdjLTYuOSwyLjktNDEtNTAuNy00OS42LTUzcy04NC4zLDgzLjMtMTAxLjQsNzUuMXMtMjYuOS0yLjMtMzUuNCwzLjUNCgljLTguNiw1LjktMTEsNS45LTE1LjksOC4ycy0xNy4xLTUuOS0xNy4xLTUuOVYyNjVjMCwwLDQwMCwwLjIsNDAwLDB2LTU4LjhINDAweiIvPg0KPHBhdGggZmlsbD0iIzdFOTZBNiIgZD0iTTMzMy40LDE3OWMtMTMuMS05LjMtNDAsNC42LTU1LjEsMTAuN2MtMjMuNiw5LjYtOTQtNTQuNC0xMDcuMi01OS43YzAsMC00LjIsMy43LTkuNiw3LjYNCgljLTMuNS0wLjQtOC40LTUuNy05LjktNC43Yy00LjYsMy4xLTE3LjgsMTUuNC0yOC4zLDI2LjZjLTEwLjUsMTEuMy0xMS43LDAtMTUuOC0wLjZjLTIuNS0wLjQtNTQuMSw0Mi41LTU4LjcsNDMuMQ0KCUMyMi4zLDIwNS4zLDAsMTk3LjUsMCwxOTcuNVYyNjVsNDAwLTAuMXYtNTMuM0M0MDAsMjExLjYsMzQ0LjgsMTg3LjEsMzMzLjQsMTc5eiIvPg0KPHBhdGggZmlsbD0iIzc4OEY5RSIgZD0iTTAsMjY0Ljl2LTU4LjZjMCwwLDguMiwxLjgsMTEuMyw1LjNjMy4xLDMuNiwyNi4xLTQuMiwyNi4xLDQuN3MwLjUsNC4yLDAuNSwxNC44YzAsMTAuNywyMy00LjIsMzguMS0xOC40DQoJczM0LjktNDkuMiwzNi0zNWMxLDE0LjItMTUuMSwzOS4yLTI0LDU2LjRDNzkuMSwyNTEuNCw1MS43LDI2NSw1MS43LDI2NUwwLDI2NC45eiIvPg0KPHBhdGggZmlsbD0iIzc4OEY5RSIgZD0iTTEwMCwyNjVjMCwwLDY2LjctMTI1LjEsNjguMy0xMTYuOHMtNi44LDI5LjcsMi4xLDI2LjFjOC45LTMuNiwxNC42LTE2LDE4LjgtOS41czE2LjIsMzguNiwyMS45LDMzLjgNCgljNS43LTQuNywyMS40LTEzLjEsMjIuNC02LjVjMSw2LjUtMSw1LjMtNS43LDIwLjJDMjIzLjEsMjI3LjEsMjAwLDI2NSwyMDAsMjY1aC0xMGMwLDAsNi0yNC44LDguNi0zNC45YzIuNi0xMC4xLTMuNy0xOS0xMi04LjMNCglzLTIzLDIyLTI0LDE3LjhzLTUuNy0zMC4zLTE4LjgtMTQuMmMtMTMsMTYtMzMuOCwzOS43LTMzLjgsMzkuN2gtMTBWMjY1eiIvPg0KPHBhdGggZmlsbD0iIzc4OEY5RSIgZD0iTTI0NSwyNjVjMCwwLDE5LjgtNTQuNywzMy40LTY0LjJzNTMuNy0yNy45LDQ2LjktMTMuNmMtNi44LDE0LjItMTEsMzQuNC0yMC4zLDQ5LjgNCgljLTkuNCwxNS40LTE4LjgsMjYuMS0xNC4xLDEzLjZjNC43LTEyLjUsNi40LTIzLjMsMy43LTIzLjFDMjcxLjMsMjI5LjEsMjYwLDI2NSwyNjAsMjY1SDI0NXoiLz4NCjwvc3ZnPg0K");
+    background-position: 50% 50%;
+  }
+  .u-section-2 .u-container-layout-2 {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-left: 60px;
+    padding-right: 60px;
+  }
+  .u-section-2 .u-text-3 {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .u-section-2 .u-text-4 {
+    width: 409px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0;
+  }
+  .u-section-2 .u-btn-2 {
+    border-style: none;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    letter-spacing: 1px;
+    background-image: none;
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0;
+  }
+  .u-section-2 .u-carousel-control-1 {
+    width: 38px;
+    height: 38px;
+    background-image: none;
+    left: -58px;
+    position: absolute;
+    right: auto;
+  }
+  .u-section-2 .u-carousel-control-2 {
+    width: 38px;
+    height: 38px;
+    background-image: none;
+    left: auto;
+    position: absolute;
+    right: -58px;
+  }
+}</style>
+      <div id="carousel-bd35" data-interval="5000" data-u-ride="carousel" class="u-carousel u-expanded-width u-slider u-slider-1">
+        <ol class="u-absolute-hcenter u-carousel-indicators u-carousel-indicators-1">
+          <li data-u-target="#carousel-bd35" class="u-active u-active-custom-color-4 u-grey-5 u-shape-circle" data-u-slide-to="0" style="width: 10px; height: 10px;"></li>
+          <li data-u-target="#carousel-bd35" class="u-active-custom-color-4 u-grey-5 u-shape-circle" data-u-slide-to="1" style="width: 10px; height: 10px;"></li>
+          <li data-u-target="#carousel-bd35" class="u-active-custom-color-4 u-grey-5 u-shape-circle" data-u-slide-to="2" style="width: 10px; height: 10px;"></li>
+          <li data-u-target="#carousel-bd35" class="u-active-custom-color-4 u-grey-5 u-shape-circle" data-u-slide-to="3" style="width: 10px; height: 10px;"></li>
+        </ol>
+        <div class="u-carousel-inner" role="listbox">
+          <div class="u-active u-align-center u-carousel-item u-container-style u-image u-image-tiles u-shading u-slide u-image-1" data-image-width="1670" data-image-height="939">
+            <div class="u-container-layout u-valign-middle u-container-layout-1">
+              <h2 class="u-text u-text-default u-text-1">Afric Futsal</h2>
+              <p class="u-text u-text-2">Afric Futsal is an app availale in Android/iOS, with mini-games and interactive story telling for kids. Developed for Afric Sports. This app has in-game purchases, localization and a file manager to download all the game files needed.</p>
+              <a href="Projects.html" data-page-id="402817513" class="u-active-custom-color-3 u-border-none u-btn u-btn-round u-button-style u-custom-color-1 u-hover-custom-color-2 u-radius-50 u-btn-1">know more</a>
+            </div>
+          </div>
+          <div class="u-align-center u-carousel-item u-container-style u-image u-shading u-slide u-image-2" data-image-width="1920" data-image-height="1080">
+            <div class="u-container-layout u-valign-middle u-container-layout-2">
+              <h2 class="u-text u-text-default u-text-3">VR Park</h2>
+              <p class="u-text u-text-4">This is an immersive experience for Oculus Rift S and Quest, developed for Labpsitec, a psychology research group from Universitat de Valencia, in this game, you can walk around a photo-realistic park and participate in several activities that will modify your mood.</p>
+              <a href="Projects.html" data-page-id="402817513" class="u-active-custom-color-3 u-border-none u-btn u-btn-round u-button-style u-custom-color-1 u-hover-custom-color-2 u-radius-50 u-btn-2">know more</a>
+            </div>
+          </div>
+          <div class="u-align-center u-carousel-item u-container-style u-image u-image-tiles u-shading u-slide u-image-3" data-image-width="3257" data-image-height="1826">
+            <div class="u-container-layout u-valign-middle u-container-layout-3">
+              <h2 class="u-text u-text-default u-text-5">Ando Cultivando</h2>
+              <p class="u-text u-text-6">This is my most recent outsourcing project, available in Play Store, made for several government agencies and organizations, it includes mini-games and information about gardening and ecologism.</p>
+              <a href="Projects.html" data-page-id="402817513" class="u-active-custom-color-3 u-border-none u-btn u-btn-round u-button-style u-custom-color-1 u-hover-custom-color-2 u-radius-50 u-btn-3">know more</a>
+            </div>
+          </div>
+          <div class="u-align-center u-carousel-item u-container-style u-image u-shading u-slide u-image-4" data-image-width="1282" data-image-height="752">
+            <div class="u-container-layout u-valign-middle u-container-layout-4">
+              <h2 class="u-text u-text-default u-text-7">Timerlabs</h2>
+              <p class="u-text u-text-8">Timerlabs is a personal project made with Unity for Windows PC. This app allows the user control a timer when streaming to Twitch and control the timer under certain events.</p>
+              <a href="Projects.html" data-page-id="402817513" class="u-active-custom-color-3 u-border-none u-btn u-btn-round u-button-style u-custom-color-1 u-hover-custom-color-2 u-radius-50 u-btn-4">know more</a>
+            </div>
+          </div>
+        </div>
+        <a class="u-absolute-vcenter-lg u-absolute-vcenter-md u-absolute-vcenter-sm u-absolute-vcenter-xl u-carousel-control u-carousel-control-prev u-custom-color-1 u-hidden-xs u-hover-custom-color-2 u-icon-circle u-spacing-9 u-carousel-control-1" href="#carousel-bd35" role="button" data-u-slide="prev">
+          <span aria-hidden="true">
+            <svg viewBox="0 0 451.847 451.847"><path d="M97.141,225.92c0-8.095,3.091-16.192,9.259-22.366L300.689,9.27c12.359-12.359,32.397-12.359,44.751,0
+c12.354,12.354,12.354,32.388,0,44.748L173.525,225.92l171.903,171.909c12.354,12.354,12.354,32.391,0,44.744
+c-12.354,12.365-32.386,12.365-44.745,0l-194.29-194.281C100.226,242.115,97.141,234.018,97.141,225.92z"></path></svg>
+          </span>
+          <span class="sr-only">
+            <svg viewBox="0 0 451.847 451.847"><path d="M97.141,225.92c0-8.095,3.091-16.192,9.259-22.366L300.689,9.27c12.359-12.359,32.397-12.359,44.751,0
+c12.354,12.354,12.354,32.388,0,44.748L173.525,225.92l171.903,171.909c12.354,12.354,12.354,32.391,0,44.744
+c-12.354,12.365-32.386,12.365-44.745,0l-194.29-194.281C100.226,242.115,97.141,234.018,97.141,225.92z"></path></svg>
+          </span>
+        </a>
+        <a class="u-absolute-vcenter-lg u-absolute-vcenter-md u-absolute-vcenter-sm u-absolute-vcenter-xl u-carousel-control u-carousel-control-next u-custom-color-1 u-hidden-xs u-hover-custom-color-2 u-icon-circle u-spacing-9 u-carousel-control-2" href="#carousel-bd35" role="button" data-u-slide="next">
+          <span aria-hidden="true">
+            <svg viewBox="0 0 451.846 451.847"><path d="M345.441,248.292L151.154,442.573c-12.359,12.365-32.397,12.365-44.75,0c-12.354-12.354-12.354-32.391,0-44.744
+L278.318,225.92L106.409,54.017c-12.354-12.359-12.354-32.394,0-44.748c12.354-12.359,32.391-12.359,44.75,0l194.287,194.284
+c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,248.292z"></path></svg>
+          </span>
+          <span class="sr-only">
+            <svg viewBox="0 0 451.846 451.847"><path d="M345.441,248.292L151.154,442.573c-12.359,12.365-32.397,12.365-44.75,0c-12.354-12.354-12.354-32.391,0-44.744
+L278.318,225.92L106.409,54.017c-12.354-12.359-12.354-32.394,0-44.748c12.354-12.359,32.391-12.359,44.75,0l194.287,194.284
+c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,248.292z"></path></svg>
+          </span>
+        </a>
+      </div>
+    </section>
+    <section class="u-align-center u-clearfix u-custom-color-4 u-section-3" id="carousel_1ddb">
+      <div class="u-shape u-shape-svg u-text-custom-color-1 u-shape-1">
+        <svg class="u-svg-link" preserveAspectRatio="none" viewBox="0 0 160 140" style=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-7f3a"></use></svg>
+        <svg class="u-svg-content" viewBox="0 0 160 140" x="0px" y="0px" id="svg-7f3a"><g><g><path d="M138.9,102.2c-9.5,10.1-24.4,20.2-41.2,27.4C63.2,144.5,21,147.1,3.1,112.4c-9.9-19.1,6.5-28.8,11.8-45.7
+			c5.3-16.9-11.4-32.3-5.1-49.9c1.8-4.9,4.9-9,8.9-11.9C24,1,30.8-0.8,37.8,0.3C43.6,1.2,49,3.5,54.3,5.7c8.8,3.7,17.4,7.1,26.3,9.8
+			c15.7,4.7,31.3,3.7,47.1,7.2c8.5,1.9,16.7,5.6,22.6,11.8C170.3,55.7,155.8,84.1,138.9,102.2z"></path>
+</g>
+</g></svg>
+      </div>
+      <h2 class="u-align-left u-text u-text-1">Professional highlights</h2>
+      <div class="u-shape u-shape-svg u-text-white u-shape-2">
+        <svg class="u-svg-link" preserveAspectRatio="none" viewBox="0 0 160 100" style=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-2f6e"></use></svg>
+        <svg class="u-svg-content" viewBox="0 0 160 100" x="0px" y="0px" id="svg-2f6e"><path d="M133,27.2c-13.9,9.9-25.8,9.9-39.8,0c-9.1-6.4-16.8-6.4-25.9,0c-13.8,9.8-25.1,9.8-38.9,0c-9.2-6.5-15.4-6.5-24.6,0L0,22.4
+	c11.2-8,20.6-8.3,32.2,0c11,7.8,19,8.7,31.3,0c11.6-8.3,22.4-7.9,33.5,0c11.4,8.2,20.3,8.5,32.2,0c11.6-8.3,19.2-8.3,30.8,0
+	l-3.8,4.8C146.9,20.6,142.3,20.6,133,27.2z M133,11c-13.9,9.9-25.8,9.9-39.8,0c-9.1-6.4-16.8-6.4-25.9,0c-13.8,9.8-25.1,9.8-38.9,0
+	C19.2,4.5,13,4.5,3.8,11L0,6.2c11.2-8,20.6-8.3,32.2,0c11,7.8,19,8.7,31.3,0c11.6-8.3,22.4-7.9,33.5,0c11.4,8.2,20.3,8.5,32.2,0
+	c11.6-8.3,19.2-8.3,30.8,0l-3.8,4.8C146.9,4.4,142.3,4.4,133,11z M32.2,38.8c11,7.8,19,8.7,31.3,0c11.6-8.3,22.4-7.9,33.5,0
+	c11.4,8.2,20.3,8.5,32.2,0c11.6-8.3,19.2-8.3,30.8,0l-3.8,4.8c-9.3-6.6-13.9-6.6-23.3,0c-13.9,9.9-25.8,9.9-39.8,0
+	c-9.1-6.4-16.8-6.4-25.9,0c-13.8,9.8-25.1,9.8-38.9,0c-9.2-6.5-15.4-6.5-24.6,0L0,38.8C11.2,30.8,20.6,30.5,32.2,38.8z M133,76.2
+	c-13.9,9.9-25.8,9.9-39.8,0c-9.1-6.4-16.8-6.4-25.9,0c-13.8,9.8-25.1,9.8-38.9,0c-9.2-6.5-15.4-6.5-24.6,0L0,71.4
+	c11.2-8,20.6-8.3,32.2,0c11,7.8,19,8.7,31.3,0c11.6-8.3,22.4-7.9,33.5,0c11.4,8.2,20.3,8.5,32.2,0c11.6-8.3,19.2-8.3,30.8,0
+	l-3.8,4.8C146.9,69.6,142.3,69.6,133,76.2z M133,60c-13.9,9.9-25.8,9.9-39.8,0c-9.1-6.4-16.8-6.4-25.9,0c-13.8,9.8-25.1,9.8-38.9,0
+	c-9.2-6.5-15.4-6.5-24.6,0L0,55.2c11.2-8,20.6-8.3,32.2,0c11,7.8,19,8.7,31.3,0c11.6-8.3,22.4-7.9,33.5,0c11.4,8.2,20.3,8.5,32.2,0
+	c11.6-8.3,19.2-8.3,30.8,0l-3.8,4.8C146.9,53.4,142.3,53.4,133,60z M32.2,87.8c11,7.8,19,8.7,31.3,0c11.6-8.3,22.4-7.9,33.5,0
+	c11.4,8.2,20.3,8.5,32.2,0c11.6-8.3,19.2-8.3,30.8,0l-3.8,4.8c-9.3-6.6-13.9-6.6-23.3,0c-13.9,9.9-25.8,9.9-39.8,0
+	c-9.1-6.4-16.8-6.4-25.9,0c-13.8,9.8-25.1,9.8-38.9,0c-9.2-6.5-15.4-6.5-24.6,0L0,87.8C11.2,79.8,20.6,79.5,32.2,87.8z"></path></svg>
+      </div>
+      <div class="u-custom-color-1 u-expanded-width u-shape u-shape-rectangle u-shape-3"></div>
+      <div class="u-clearfix u-gutter-30 u-layout-wrap u-layout-wrap-1">
+        <div class="u-layout">
+          <div class="u-layout-col">
+            <div class="u-size-30">
+              <div class="u-layout-row">
+                <div class="u-container-style u-layout-cell u-left-cell u-size-24 u-layout-cell-1">
+                  <div class="u-container-layout u-valign-middle u-container-layout-1">
+                    <div class="u-image u-image-circle u-image-1" data-image-width="903" data-image-height="464"></div>
+                  </div>
+                </div>
+                <div class="u-container-style u-layout-cell u-right-cell u-size-36 u-layout-cell-2">
+                  <div class="u-container-layout">
+                    <div class="u-image u-image-circle u-preserve-proportions u-image-2" data-image-width="1599" data-image-height="1599"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="u-size-30">
+              <div class="u-layout-row">
+                <div class="u-container-style u-layout-cell u-left-cell u-size-24 u-layout-cell-3">
+                  <div class="u-container-layout u-valign-top u-container-layout-3">
+                    <h4 class="u-text u-text-2">Experience:</h4>
+                    <ol class="u-text u-text-3">
+                      <li>
+                        <span style="font-size: 1rem;">+5 years of experience with Unity 3D.<br>
+                        </span>
+                      </li>
+                      <li>
+                        <span style="font-size: 1rem;">Outsourcing and freelance projects.</span>
+                      </li>
+                      <li>
+                        <span style="font-size: 1rem;">Mobile, VR, multiplayer...</span>
+                      </li>
+                      <li>
+                        <span style="font-size: 1rem;">Git, Photoshop, Unreal, Premiere, 3DS Max.</span>
+                      </li>
+                      <li>
+                        <span style="font-size: 1rem;">C#, MySQL, Javascript.</span>
+                      </li>
+                    </ol>
+                    <a href="Projects.html" data-page-id="402817513" class="u-active-custom-color-3 u-border-none u-btn u-btn-round u-button-style u-custom-color-1 u-hover-custom-color-2 u-radius-50 u-text-active-white u-text-body-alt-color u-text-hover-white u-btn-1">learn more</a>
+                  </div>
+                </div>
+                <div class="u-container-style u-layout-cell u-size-19 u-layout-cell-4">
+                  <div class="u-container-layout u-valign-top">
+                    <div class="u-image u-image-circle u-image-3" data-image-width="815" data-image-height="451"></div>
+                  </div>
+                </div>
+                <div class="u-align-right u-container-style u-layout-cell u-right-cell u-size-17 u-layout-cell-5">
+                  <div class="u-container-layout u-valign-top u-container-layout-5">
+                    <p class="u-text u-text-4">Mixing creativity and logic is my greatest motivation. Game development allows me to express my self in many ways and I want to be able to develop any idea.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="u-clearfix u-custom-color-3 u-section-4" id="sec-76f3">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <img class="u-image u-image-contain u-image-default u-image-1" src="images/U_Logo_White_RGB.png" alt="" data-image-width="1157" data-image-height="403">
+        <img class="u-image u-image-contain u-image-default u-image-2" src="images/oculus-logo2.png" alt="" data-image-width="1541" data-image-height="1250">
+        <img class="u-image u-image-contain u-image-default u-image-3" src="images/c-sharp-c-logo-02F17714BA-seeklogo.com.png" alt="" data-image-width="267" data-image-height="300">
+      </div>
+    </section>
+    <section class="u-align-center u-clearfix u-section-5" id="sec-4193">
+      <div class="u-align-left u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <div class="u-expanded-width u-list u-list-1">
+          <div class="u-repeater u-repeater-1">
+            <div class="u-container-style u-list-item u-repeater-item">
+              <div class="u-container-layout u-similar-container u-valign-top u-container-layout-1"><span class="u-icon u-icon-circle u-text-custom-color-4 u-icon-1"><svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 512 512" style=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-8508"></use></svg><svg class="u-svg-content" viewBox="0 0 512 512" x="0px" y="0px" id="svg-8508" style="enable-background:new 0 0 512 512;"><g><g><path d="M493.563,431.87l-58.716-125.913c-32.421,47.207-83.042,80.822-141.639,91.015l49.152,105.401    c6.284,13.487,25.732,12.587,30.793-1.341l25.193-69.204l5.192-2.421l69.205,25.193    C486.63,459.696,499.839,445.304,493.563,431.87z"></path>
+</g>
+</g><g><g><path d="M256.001,0C154.815,0,72.485,82.325,72.485,183.516s82.331,183.516,183.516,183.516    c101.186,0,183.516-82.325,183.516-183.516S357.188,0,256.001,0z M345.295,170.032l-32.541,31.722l7.69,44.804    c2.351,13.679-12.062,23.956-24.211,17.585l-40.231-21.148l-40.231,21.147c-12.219,6.416-26.549-3.982-24.211-17.585l7.69-44.804    l-32.541-31.722c-9.89-9.642-4.401-26.473,9.245-28.456l44.977-6.533l20.116-40.753c6.087-12.376,23.819-12.387,29.913,0    l20.116,40.753l44.977,6.533C349.697,143.557,355.185,160.389,345.295,170.032z"></path>
+</g>
+</g><g><g><path d="M77.156,305.957L18.44,431.87c-6.305,13.497,7.023,27.81,20.821,22.727l69.204-25.193l5.192,2.421l25.193,69.205    c5.051,13.899,24.496,14.857,30.793,1.342l49.152-105.401C160.198,386.779,109.578,353.165,77.156,305.957z"></path>
+</g>
+</g></svg></span>
+                <h3 class="u-align-center u-text u-text-default u-text-1">Global Game Jam 19</h3>
+                <p class="u-align-center u-text u-text-2">Together with my team we were elected as the best GGJ game at the university with Genja VR, a couch party game where one player controlls traps and cameras in virtual reality and 2 players try to repair a space-ship.</p>
+                <a href="https://globalgamejam.org/2020/games/genja-5-1" class="u-border-2 u-border-custom-color-1 u-btn u-button-style u-none u-text-body-color u-btn-1" target="_blank">learn more</a>
+              </div>
+            </div>
+            <div class="u-align-center u-container-style u-list-item u-repeater-item">
+              <div class="u-container-layout u-similar-container u-valign-top u-container-layout-2"><span class="u-icon u-icon-circle u-text-custom-color-4 u-icon-2"><svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 512 512" style=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-88da"></use></svg><svg class="u-svg-content" viewBox="0 0 512 512" x="0px" y="0px" id="svg-88da" style="enable-background:new 0 0 512 512;"><g><g><path d="M493.563,431.87l-58.716-125.913c-32.421,47.207-83.042,80.822-141.639,91.015l49.152,105.401    c6.284,13.487,25.732,12.587,30.793-1.341l25.193-69.204l5.192-2.421l69.205,25.193    C486.63,459.696,499.839,445.304,493.563,431.87z"></path>
+</g>
+</g><g><g><path d="M256.001,0C154.815,0,72.485,82.325,72.485,183.516s82.331,183.516,183.516,183.516    c101.186,0,183.516-82.325,183.516-183.516S357.188,0,256.001,0z M345.295,170.032l-32.541,31.722l7.69,44.804    c2.351,13.679-12.062,23.956-24.211,17.585l-40.231-21.148l-40.231,21.147c-12.219,6.416-26.549-3.982-24.211-17.585l7.69-44.804    l-32.541-31.722c-9.89-9.642-4.401-26.473,9.245-28.456l44.977-6.533l20.116-40.753c6.087-12.376,23.819-12.387,29.913,0    l20.116,40.753l44.977,6.533C349.697,143.557,355.185,160.389,345.295,170.032z"></path>
+</g>
+</g><g><g><path d="M77.156,305.957L18.44,431.87c-6.305,13.497,7.023,27.81,20.821,22.727l69.204-25.193l5.192,2.421l25.193,69.205    c5.051,13.899,24.496,14.857,30.793,1.342l49.152-105.401C160.198,386.779,109.578,353.165,77.156,305.957z"></path>
+</g>
+</g></svg>
+            
+            
+          </span>
+                <h3 class="u-align-center u-text u-text-default u-text-3">Independev Game Fest</h3>
+                <p class="u-align-center u-text u-text-4">In 2016 I launched my first mobile game to the Play Store and it was awarded as the best mobile game made by juniors in this contest made by Rovio Games and&nbsp;</p>
+                <a href="https://www.gameprotv.com/noticias/fallados-los-premios-de-la-primera-edicion-del-independev-game-fest" class="u-border-2 u-border-custom-color-1 u-btn u-button-style u-none u-text-body-color u-btn-2" target="_blank">learn more</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    
+    
+    <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-aa16"><div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <p class="u-small-text u-text u-text-variant u-text-1">Joel Blasco. Portfolio 2022. All images presenting my work are of my property and shall not be used in any way.</p>
+      </div></footer>
+  <iframe frameborder="0" src="https://itch.io/embed-upload/5742375?color=ffffff" allowfullscreen="" width="500" height="500"></iframe>
+</body></html>
