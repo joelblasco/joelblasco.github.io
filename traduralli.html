@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Traduralli</title>
+<style>
+    body {
+      height: 100vh;
+      margin: 0;
+      font-family: sans-serif;
+      text-align: center; /* Centra el contenido horizontalmente */
+    }
+
+    header {
+      margin-bottom: 10px; /* Añade espacio entre el título y el resto */
+    }
+
+    #input, #output {
+      width: 90%;
+      height: 100px;
+      margin: 10px auto; /* Margen superior e inferior, auto para centrar horizontalmente */
+      resize: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <font size="6">TRADURALLI!</font>
+	<br>
+    <input type="checkbox" id="decode" onchange="calculate()"> Decodificar
+  </header>
+  <br>
+  <section>
+    <textarea id="input" placeholder="Introduir el text a traduir"></textarea>
+    <textarea id="output" placeholder="Text traduit" readonly></textarea>
+	<br>
+    <button onclick="calculate()">Traduir</button>
+  </section>
+
+  <script>
+    function calculate() {
+      let input = document.getElementById('input').value;
+      let output = document.getElementById('output');
+      let decode = document.getElementById('decode').checked;
+
+      output.value = '';
+
+      if (decode) {
+        let strings = input.split(' ');
+        for (let i = 0; i < strings.length; i++) {
+          switch (strings[i])
+		  {
+            case "-":
+              output.value += " ";
+              break;
+            case "En!":
+              output.value += "A";
+              break;
+            case "Ral.li":
+			case "Ral·li":
+			case "Ralli":
+				output.value += "B";
+				break;
+			case "Cà":
+				output.value += "Ç";
+				break;
+			case "Ral!":
+				output.value += "D";
+				break;
+			case "Li":
+				output.value += "E";
+				break;
+			case "Li!":
+				output.value += "F";
+				break;
+			case "Ral":
+				output.value += "H";
+				break;
+			case "Encà":
+				output.value += "I";
+				break;
+			case "Ral·li!":
+			case "Ralli!":
+			case "Ral.li!":
+				output.value += "L";
+				break;
+			case "Cà!":
+				output.value += "M";
+				break;
+			case "En":
+				output.value += "N";
+				break;
+			case "Com":
+				output.value += "O";
+				break;
+			case "Encà!":
+				output.value += "P";
+				break;
+			case "Càcom!":
+				output.value += "R";
+				break;
+			case "Càcom":
+				output.value += "S";
+				break;
+			case "Liral!":
+				output.value += "T";
+				break;
+			case "Com!":
+				output.value += "V";
+				break;
+			case "Càen":
+				output.value += "Y";
+				break;
+            default:
+              output.value += strings[i];
+              break;
+          }
+        }
+      } else {
+        let strings = input.split('');
+        for (let i = 0; i < strings.length; i++) {
+          switch (strings[i]) {
+            case ' ':
+              output.value += "- ";
+              break;
+            case 'A':
+              output.value += "En! ";
+              break;
+            case 'B':
+				output.value += "Ral·li ";
+				break;
+			case 'C':
+			case 'Ç':
+				output.value += "Cà ";
+				break;
+			case 'D':
+				output.value += "Ral! ";
+				break;
+			case 'E':
+				output.value += "Li ";
+				break;
+			case 'F':
+				output.value += "Li! ";
+				break;
+			case 'H':
+				output.value += "Ral ";
+				break;
+			case 'I':
+				output.value += "Encà ";
+				break;
+			case 'L':
+				output.value += "Ral·li! ";
+				break;
+			case 'M':
+				output.value += "Cà! ";
+				break;
+			case 'N':
+				output.value += "En ";
+				break;
+			case 'O':
+				output.value += "Com ";
+				break;
+			case 'P':
+				output.value += "Encà! ";
+				break;
+			case 'R':
+				output.value += "Càcom! ";
+				break;
+			case 'S':
+				output.value += "Càcom ";
+				break;
+			case 'T':
+				output.value += "Liral! ";
+				break;
+			case 'V':
+				output.value += "Com! ";
+				break;
+			case 'Y':
+				output.value += "Càen ";
+				break;
+            default:
+              output.value += strings[i]+" ";
+              break;
+          }
+        }
+      }
+    }
+  </script>
+</body>
+</html>
