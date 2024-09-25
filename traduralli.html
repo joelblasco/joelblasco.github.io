@@ -43,7 +43,7 @@
 	<br>
     	<button class="button-Translate" onclick="calculate()">Traduir</button>  
 		<br>
-	<span id ="textoAdvertencia"></span>>
+	<span id ="textoAdvertencia"> v1.1</span>
   </section>
 
   <script>
@@ -55,7 +55,7 @@
 	  let invent = document.getElementById('invent').checked;
 
       output.value = '';
-	  warnText.value = '';
+	  warnText.textContent = '';
 
       if (decode) {
         let strings = input.split(/[\s\n]/);
@@ -133,71 +133,71 @@
 			case "Liral": 
 			if(invent){
 				output.value += "G";
-				warnText.value = "El text conté invents";
+				warnText.textContent = "El text conté invents";
 			}
 			else{
 				output.value += strings[i];
-				warnText.value = "Falta alguna lletra";
+				warnText.textContent = "Falta alguna lletra";
 			}
 			break;
 			case "Encom": 
 			if(invent){
 				output.value += "J";
-				warnText.value = "El text conté invents";
+				warnText.textContent = "El text conté invents";
 			}
 			else{
 				output.value += strings[i];
-				warnText.value = "Falta alguna lletra";
+				warnText.textContent = "Falta alguna lletra";
 			}
 			break;
 			case "Encom!": 
 			if(invent){
 				output.value += "K";
-				warnText.value = "El text conté invents";
+				warnText.textContent = "El text conté invents";
 			}
 			else{
 				output.value += strings[i];
-				warnText.value = "Falta alguna lletra";
+				warnText.textContent = "Falta alguna lletra";
 			}
 			break;
 			case "Licà": 
 				if(invent){
 					output.value += "Q";
-					warnText.value = "El text conté invents";
+					warnText.textContent = "El text conté invents";
 				}
 				else{
 					output.value += strings[i];
-					warnText.value = "Falta alguna lletra";
+					warnText.textContent = "Falta alguna lletra";
 				}
 				break;
 				case "Licà!": 
 				if(invent){
 					output.value += "W";
-					warnText.value = "El text conté invents";
+					warnText.textContent = "El text conté invents";
 				}
 				else{
 					output.value += strings[i];
-					warnText.value = "Falta alguna lletra";
+					warnText.textContent = "Falta alguna lletra";
 				}
 				break;
 				case "Comen": 
 				if(invent){
 					output.value += "X";
-					warnText.value = "El text conté invents";
+					warnText.textContent = "El text conté invents";
 				}
 				else{
 					output.value += strings[i];
-					warnText.value = "Falta alguna lletra";
+					warnText.textContent = "Falta alguna lletra";
 				}
 				break;
 				case "Comen!": 
 				if(invent){
 					output.value += "Z";
-					warnText.value = "El text conté invents";
+					warnText.textContent = "El text conté invents";
 				}
 				else{
 					output.value += strings[i];
-					warnText.value = "Falta alguna lletra";
+					warnText.textContent = "Falta alguna lletra";
 				}
 				break;
             default:
@@ -274,71 +274,71 @@
 			case "G": 
 			if(invent){
 				output.value += "Liral ";
-				warnText.value = "El text conté invents";
+				warnText.textContent = "El text conté invents";
 			}
 			else{
 				output.value += strings[i]+" ";
-				warnText.value = "Falta alguna lletra";
+				warnText.textContent = "Falta alguna lletra";
 			}
 			break;
 			case "J": 
 			if(invent){
 				output.value += "Encom ";
-				warnText.value = "El text conté invents";
+				warnText.textContent = "El text conté invents";
 			}
 			else{
 				output.value += strings[i]+" ";
-				warnText.value = "Falta alguna lletra";
+				warnText.textContent = "Falta alguna lletra";
 			}
 			break;
 			case "K": 
 			if(invent){
 				output.value += "Encom! ";
-				warnText.value = "El text conté invents";
+				warnText.textContent = "El text conté invents";
 			}
 			else{
 				output.value += strings[i]+" ";
-				warnText.value = "Falta alguna lletra";
+				warnText.textContent = "Falta alguna lletra";
 			}
 			break;
 			case "Q": 
 			if(invent){
 				output.value += "Licà ";
-				warnText.value = "El text conté invents";
+				warnText.textContent = "El text conté invents";
 			}
 			else{
 				output.value += strings[i]+" ";
-				warnText.value = "Falta alguna lletra";
+				warnText.textContent = "Falta alguna lletra";
 			}
 			break;
 			case "W": 
 			if(invent){
 				output.value += "Licà! ";
-				warnText.value = "El text conté invents";
+				warnText.textContent = "El text conté invents";
 			}
 			else{
 				output.value += strings[i]+" ";
-				warnText.value = "Falta alguna lletra";
+				warnText.textContent = "Falta alguna lletra";
 			}
 			break;
 			case "X": 
 			if(invent){
 				output.value += "Comen! ";
-				warnText.value = "El text conté invents";
+				warnText.textContent = "El text conté invents";
 			}
 			else{
 				output.value += strings[i]+" ";
-				warnText.value = "Falta alguna lletra";
+				warnText.textContent = "Falta alguna lletra";
 			}
 			break;
 			case "Z": 
 			if(invent){
 				output.value += "Comen! ";
-				warnText.value = "El text conté invents";
+				warnText.textContent = "El text conté invents";
 			}
 			else{
 				output.value += strings[i]+" ";
-				warnText.value = "Falta alguna lletra";
+				warnText.textContent = "Falta alguna lletra";
 			}
 			break;
             default:
