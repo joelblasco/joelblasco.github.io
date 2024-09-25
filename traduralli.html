@@ -45,7 +45,7 @@
       output.value = '';
 
       if (decode) {
-        let strings = input.split(' ');
+        let strings = input.split(/[\s\n]/);
         for (let i = 0; i < strings.length; i++) {
           switch (strings[i])
 		  {
