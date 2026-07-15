@@ -231,18 +231,20 @@
 <div id="layout">
   <aside>
     <div class="tools"><input id="search" type="search" placeholder="Busca un poble o un centre…" autocomplete="off"></div>
-    <div class="fld">
-      <label for="espsearch">Especialitats</label>
-      <div id="espbox">
-        <div id="espchips"></div>
-        <input id="espsearch" type="text" placeholder="Cerca i afig especialitats…" autocomplete="off">
-        <div id="esplist"></div>
+    <div id="vaccontrols">
+      <div class="fld">
+        <label for="espsearch">Especialitats</label>
+        <div id="espbox">
+          <div id="espchips"></div>
+          <input id="espsearch" type="text" placeholder="Cerca i afig especialitats…" autocomplete="off">
+          <div id="esplist"></div>
+        </div>
+        <div id="espclear">✕ Lleva totes les especialitats</div>
       </div>
-      <div id="espclear">✕ Lleva totes les especialitats</div>
+      <div id="vacsum">Carregant vacants…</div>
+      <label class="toggle"><input type="checkbox" id="onlyvac"> Només pobles amb vacants</label>
+      <label class="toggle"><input type="checkbox" id="sizevac" checked> Mida del punt segons vacants</label>
     </div>
-    <div id="vacsum">Carregant vacants…</div>
-    <label class="toggle"><input type="checkbox" id="onlyvac"> Només pobles amb vacants</label>
-    <label class="toggle"><input type="checkbox" id="sizevac" checked> Mida del punt segons vacants</label>
     <label class="toggle"><input type="checkbox" id="osmtoggle" checked> Fons OpenStreetMap <span class="d">(noms, carreteres)</span></label>
     <label class="toggle"><input type="checkbox" id="zonestoggle" checked> Traces de subàrea</label>
     <label class="toggle"><input type="checkbox" id="lbltoggle" checked> Etiquetes de subàrea</label>
@@ -470,6 +472,8 @@ const esc=s=>(s||"").replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]
 function townTip(i){
   const d=D[i];
   const g=d[2]===0?"sense subàrea":`Àrea ${d[2]} · Subàrea ${d[3]}`;
+  const head=`<div class="tn">${esc(d[0])}</div><div class="tg">${PROVS[d[1]]} · ${g}</div>`;
+  if(!cursActual)return head;   // sense dades: només info geogràfica
   const n=CNT[i], tot=BYTOWN[i].length;
   let body;
   if(espActive()){
@@ -486,8 +490,7 @@ function townTip(i){
         +`<div class="cta">Fes clic per al detall</div>`
       : `<div class="none">Cap vacant</div>`;
   }
-  return `<div class="tn">${esc(d[0])}</div><div class="tg">${PROVS[d[1]]} · ${g}</div>`
-       + `<div class="hr"></div>` + body;
+  return head + `<div class="hr"></div>` + body;
 }
 
 /* ====== panell inferior amb el detall del municipi ====== */
@@ -497,6 +500,7 @@ const panel=document.getElementById("panel"), pnm=document.getElementById("pnm")
 let panelIdx=-1, panelAll=false;
 
 function openPanel(i){
+  if(!cursActual)return;   // sense dades: no hi ha detall a mostrar
   if(panelIdx===i&&panel.classList.contains("open")){closePanel();return;}
   panelIdx=i; panelAll=false; panel.classList.add("open"); renderPanel();
 }
@@ -559,8 +563,9 @@ function subTip(k){
   const rows=items.map((d,j)=>[d, CNT[D.indexOf(d)]]).filter(r=>r[1]>0)
                   .sort((x,y)=>y[1]-x[1]);
   const tot=rows.reduce((t,r)=>t+r[1],0);
-  let h=`<div class="tn">Subàrea ${s}</div><div class="tg">${PROVS[p]} · Àrea ${a} · ${items.length} pobles</div>`
-      +`<div class="hr"></div>`;
+  const head=`<div class="tn">Subàrea ${s}</div><div class="tg">${PROVS[p]} · Àrea ${a} · ${items.length} pobles</div>`;
+  if(!cursActual)return head;   // sense dades: només info geogràfica
+  let h=head+`<div class="hr"></div>`;
   if(!tot)return h+`<div class="none">Cap vacant${espActive()?" d'estes especialitats":""}</div>`;
   h+=`<div class="tot">${tot} vacant${tot>1?"s":""}${espActive()?` · ${esc(espDesc())}`:""}</div>`;
   h+=rows.slice(0,10).map(r=>`<div class="row"><span class="c">${esc(r[0][0])}</span> · ${r[1]}</div>`).join("");
@@ -731,9 +736,15 @@ function applyState(){
   vis.forEach(([,i])=>vacsOf(i).forEach(v=>cset.add(VAC[v].c)));
   const q=searchBox.value.trim();
   const pl=(n,s,p)=>`${n} ${n===1?s:p}`;
-  counter.textContent=(sel||q||espActive()||onlyVac)
-    ? `${pl(vis.length,"poble","pobles")} · ${pl(tot,"vacant","vacants")} · ${pl(cset.size,"centre","centres")}`
-    : `${D.length} pobles · ${VAC.length} vacants · ${CEN.length} centres`;
+  if(!cursActual){
+    counter.textContent=(sel||q)
+      ? `${pl(vis.length,"poble","pobles")}`
+      : `${D.length} pobles · 3 províncies · ${Object.keys(subGroups).length} subàrees`;
+  }else{
+    counter.textContent=(sel||q||espActive()||onlyVac)
+      ? `${pl(vis.length,"poble","pobles")} · ${pl(tot,"vacant","vacants")} · ${pl(cset.size,"centre","centres")}`
+      : `${D.length} pobles · ${VAC.length} vacants · ${CEN.length} centres`;
+  }
   const np=vis.filter(([,i])=>CNT[i]>0).length;
   document.getElementById("vacsum").innerHTML=(espActive()?`<b>${esc(espDesc())}</b><br>`:"")
     + `<b>${pl(tot,"vacant","vacants")}</b> en ${pl(cset.size,"centre","centres")} i ${pl(np,"poble","pobles")}`
@@ -769,8 +780,29 @@ CURSOS.forEach((c,i)=>{
   o.value=i; o.textContent=c.etiqueta||c.curs;
   cursSel.appendChild(o);
 });
+{
+  const o=document.createElement("option");
+  o.value="-1"; o.textContent="Sense dades (només mapa)";
+  cursSel.appendChild(o);
+}
+
+const vacControls=document.getElementById("vaccontrols");
+function buidaCurs(){
+  CEN=[]; VAC=[]; ESP=new Map(); BYTOWN=D.map(()=>[]);
+  CNT=new Int32Array(D.length);
+  cursActual=null; avisSense=null;
+  espSel.clear(); panelAll=false; if(panelIdx>=0)closePanel();
+  rebuildEspItems(); rebuildSearch(); renderChips(); renderEspList();
+  onlyVac=false; document.getElementById("onlyvac").checked=false;
+  applyState();
+  document.getElementById("subtitle").textContent="Agrupacions de pobles per àrees i subàrees";
+  vacControls.style.display="none";
+  document.getElementById("tilewarn").style.display="none";
+}
 
 async function carregaCurs(i){
+  if(i<0){buidaCurs();return;}
+  vacControls.style.display="";
   const c=CURSOS[i];
   vacsumEl.innerHTML="Carregant vacants…";
   try{
